@@ -3,28 +3,28 @@ import "./Add.css"
 export default function Add(){
     const navigate = useNavigate();
 
-    function addGameSubmitHandler(event) {
+    function addQuizSubmitHandler(event) {
     event.preventDefault();
 
     const fd = new FormData(event.target);
     const data = Object.fromEntries(fd.entries());
 
-    const storedGames = JSON.parse(localStorage.getItem("quiz")) || [];
-    const addedGame = {
+    const storedQuizs = JSON.parse(localStorage.getItem("quiz")) || [];
+    const addedQuiz = {
         id: Math.random().toString(),
         title: data.title,
         type: data.type,
         nbQuestions: data.nbQuestions
     };
 
-    const tableauJeux = [...storedGames, addedGame]
+    const tableauQuiz = [...storedQuizs, addedQuiz]
 
-    localStorage.setItem("quiz", JSON.stringify(tableauJeux));
+    localStorage.setItem("quiz", JSON.stringify(tableauQuiz));
 
-    navigate("/gameList");
+    navigate("/quizList");
   } 
       return (
-    <form onSubmit={addGameSubmitHandler}>
+    <form onSubmit={addQuizSubmitHandler}>
       <h2>Ajouter Quiz</h2>
 
       <div className="control">

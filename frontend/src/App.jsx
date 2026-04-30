@@ -15,7 +15,7 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { path: "gameList", element: <QuizList /> },
+      { path: "quizList", element: <QuizList /> },
       { path: "login", element: <Login /> },
       { path: "add", element: <Add /> },
       { path: "edit/:id", element: <EditGame /> },

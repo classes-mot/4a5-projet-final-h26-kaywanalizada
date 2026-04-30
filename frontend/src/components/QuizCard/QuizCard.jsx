@@ -1,9 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext/AuthContext";
+import { useState } from "react";
 import "./QuizCard.css";
+import Modal from "../Modal/Modal";
 const QuizCard = (props) => {
   const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleDelete = () => {
+    props.delete(props.id);
+    setIsModalOpen(false);
+  }
   return (
     <li>
       <div>
@@ -20,14 +28,19 @@ const QuizCard = (props) => {
               Modifier
             </button>
             <button
-              className="btn-supprimer"
-              onClick={() => props.delete(props.id)}
+              className="btn-supprimer"             
+              onClick={() => setIsModalOpen(true)}
             >
               Supprimer
             </button>
           </div>
         )}
       </div>
+        <Modal
+        isOpen = {isModalOpen}
+        onClose = {() => setIsModalOpen(false)}
+        onConfirm = {handleDelete}
+        >Êtes-vous sûr de vouloir supprimer {props.title}?</Modal>
     </li>
   );
 };

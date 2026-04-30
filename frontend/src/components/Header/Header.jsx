@@ -8,14 +8,14 @@ export default function Header() {
   const navigate = useNavigate();
   const bonLogout = () => {
     logout();
-    navigate("/gameList");
+    navigate("/quizList");
   };
   return (
     <header className="main-header">
       <h1 className="title">Quiz de Football</h1>
 
       <nav className="nav-links">
-        <Link to="/GameList">Mes quiz</Link>
+        <Link to="/QuizList">Mes quiz</Link>
         {isLoggedIn && <Link to="/add">Ajouter un quiz</Link>}
         {isLoggedIn ? (
           <button onClick={bonLogout} className="logout-btn">

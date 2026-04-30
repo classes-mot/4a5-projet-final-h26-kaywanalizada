@@ -26,7 +26,7 @@ export default function LoginForm() {
 
     login();
 
-    navigate("/gameList");
+    navigate("/quizList");
   };
 
   return (

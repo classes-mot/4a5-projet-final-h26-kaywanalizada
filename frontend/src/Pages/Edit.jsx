@@ -5,54 +5,51 @@ export default function UpdateTask() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const storedGames = JSON.parse(localStorage.getItem("jeux")) || [];
+  const storedQuiz = JSON.parse(localStorage.getItem("quiz")) || [];
 
-  const gameSelected = storedGames.find((g) => g.id === id);
+  const quizSelected = storedQuiz.find((g) => g.id === id);
 
-  if (!gameSelected) {
+  if (!quizSelected) {
     return (
       <div className="center">
-        <h2>Could not find game!</h2>
+        <h2>Could not find quiz!</h2>
       </div>
     );
   }
 
-  function updateGameSubmitHandler(event) {
+  function updateQuizSubmitHandler(event) {
     event.preventDefault();
 
     const fd = new FormData(event.target);
     const data = Object.fromEntries(fd.entries());
 
-    const updatedGames = storedGames.map((g) =>
+    const updatedQuiz = storedQuiz.map((g) =>
       g.id === id
         ? {
             ...g,
             title: data.title,
-            description: data.description,
-            pictureUrl: data.pictureUrl,
-            categorie: data.categorie,
-            nbJoueur: data.nbJoueur,
-            duree: data.duree,
+            type: data.type,
+            nbQuestions: data.nbQuestions,
           }
         : g,
     );
 
-    localStorage.setItem("jeux", JSON.stringify(updatedGames));
-    navigate("/gameList");
-    console.log(updatedGames);
+    localStorage.setItem("quiz", JSON.stringify(updatedQuiz));
+    navigate("/quizList");
+    console.log(updatedQuiz);
   }
 
   return (
-    <form onSubmit={updateGameSubmitHandler}>
-      <h2>Update Game</h2>
+    <form onSubmit={updateQuizSubmitHandler}>
+      <h2>Update Quiz</h2>
 
       <div className="control">
-        <label htmlFor="title">Game title</label>
+        <label htmlFor="title">Quiz title</label>
         <input
           id="title"
           type="text"
           name="title"
-          defaultValue={gameSelected.title}
+          defaultValue={quizSelected.title}
           required
         />
       </div>
@@ -64,7 +61,7 @@ export default function UpdateTask() {
           name="type"
           rows="4"
           cols="35"
-          defaultValue={gameSelected.type}
+          defaultValue={quizSelected.type}
         />
       </div>
 
