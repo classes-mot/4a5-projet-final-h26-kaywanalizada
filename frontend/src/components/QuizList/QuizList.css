@@ -1,0 +1,19 @@
+.btn.btn-primary{
+    border-radius: 8px;
+
+}
+
+.game-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 4rem 4.5rem;
+}

@@ -14,7 +14,7 @@ const QuizCard = (props) => {
   }
   return (
     <li>
-      <div>
+      <div class = "quiz-card">
         <p>Titre:{props.title}</p>
         <p>Type:{props.type}</p>
         <p>Nombre de questions: {props.nbQuestions}</p>

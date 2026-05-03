@@ -1,0 +1,53 @@
+.btn-modifier {
+  text-align: center;
+  border-radius: 8px;
+}
+.btn-supprimer {
+  text-align: center;
+  border-radius: 8px;
+}
+div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+img {
+  max-height: 200px;
+  max-width: 200px;
+}
+.group-btn {
+  display: flex;
+  flex-direction: row;
+}
+
+.btn-modifier {
+  background-color: #2563eb;
+  color: white;
+}
+
+.btn-modifier:hover {
+  background-color: #1d4ed8;
+}
+
+.btn-supprimer {
+  background-color: #ef4444;
+  color: white;
+}
+
+.btn-supprimer:hover {
+  background-color: #dc2626;
+}
+.group-btn{
+    display: flex;
+    flex-direction: row;
+}
+p{
+    margin: 0.002rem;
+}
+
+.quiz-card{
+    border: 2px solid black;
+    border-radius: 12px;
+    padding: 1.2rem;
+}
