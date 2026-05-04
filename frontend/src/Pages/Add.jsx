@@ -1,7 +1,23 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import "./Add.css"
 export default function Add(){
     const navigate = useNavigate();
+    const [questions, setQuestions] = useState([]);
+
+    const ajouterQuestion = () => {
+       setQuestions([...questions, { id:Math.random().toString(), question: "", reponse: ""}]);
+    }
+
+    const modifierQuestion = (index, champ, valeur) => {
+       const nouvelleQuestions = [...questions];
+       nouvelleQuestions[index][champ] = valeur;
+      setQuestions(nouvelleQuestions);
+    }
+
+    const supprimerQuestion = (index) => {
+        setQuestions(questions.filter((q, i) => i !== index));
+    }
 
     function addQuizSubmitHandler(event) {
     event.preventDefault();
@@ -14,7 +30,8 @@ export default function Add(){
         id: Math.random().toString(),
         title: data.title,
         type: data.type,
-        nbQuestions: data.nbQuestions
+        nbQuestions: questions.length,
+        questions: questions
     };
 
     const tableauQuiz = [...storedQuizs, addedQuiz]
@@ -53,7 +70,43 @@ export default function Add(){
           id="nbQuestions"
           type="number"
           name="nbQuestions"
+          min="0"
         />
+      </div>
+
+      <div className="control">
+        <label htmlFor="questions">Questions</label>
+        {questions.map((q, index) => (
+          <div key={q.id} className="block-question">
+            <div className="control">
+            <label>Question {index + 1}</label>
+            <input
+              type="text"
+              value={q.question}
+              onChange = {(e) => modifierQuestion(index, "question", e.target.value)}
+              required
+              />
+              </div>
+
+            <div className="control">
+            <label>Bonne réponse</label>
+            <input
+              type="text"
+              value={q.reponse}
+              onChange = {(e) => modifierQuestion(index, "reponse", e.target.value)}
+              required
+              />
+              </div>
+
+            <button type="button" onClick={() => supprimerQuestion(index)}>
+            Supprimer question
+          </button>
+          </div>
+        ))}
+        <button type="button" onClick={ajouterQuestion}>
+          AjouterQuestion
+        </button>
+
       </div>
 
 
