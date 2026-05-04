@@ -4,7 +4,7 @@ let isConnected = false;
 
 export const connectDB = async () => {
     if(isConnected) return;
-    const uri = 'mongodb://localhost:27017/projetFinal-webEtBase';
+    const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/projetFinal-webEtBase';
 
     try {
         await mongoose.connect(uri);
