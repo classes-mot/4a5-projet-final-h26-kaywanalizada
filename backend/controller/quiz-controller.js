@@ -8,6 +8,8 @@ const addQuiz = async (requete, reponse, next) => {
         title: requete.body.title,
         type: requete.body.type,
         nbQuestion: requete.body.nbQuestion,
+        questions: requete.body.questions,
+        reponse: requete.body.reponse,
         user: userId
     });
     let user;
@@ -55,7 +57,7 @@ const modifierQuiz = async (requete, reponse, next) => {
         if(!updatedQuiz){
             return reponse.status(404).json({message: "Quiz introuvable"});
         }
-        reponse.status(200).json({jeu: updatedQuiz.toObject({getters:true})});
+        reponse.status(200).json({quiz: updatedQuiz.toObject({getters:true})});
     }catch (err) {
         reponse.status(500).json({message: "Erreur lors de la mise à jour du jeu"});
     }
