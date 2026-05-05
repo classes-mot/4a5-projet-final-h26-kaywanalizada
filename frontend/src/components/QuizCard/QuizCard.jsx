@@ -19,6 +19,10 @@ const QuizCard = (props) => {
         <p>Type:{props.type}</p>
         <p>Nombre de questions: {props.nbQuestions}</p>
 
+        <button className="btn-jouer" onClick={() =>navigate(`/jouer/${props.id}`)}>
+          Jouer
+        </button>
+
         {isLoggedIn && (
           <div className="group-btn">
             <button

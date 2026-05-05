@@ -8,6 +8,7 @@ import RootLayout from "./Pages/RootLayout";
 import QuizList from "./components/QuizList/QuizList";
 
 import "./App.css";
+import Jouer from "./Pages/Jouer";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
       { path: "login", element: <Login /> },
       { path: "add", element: <Add /> },
       { path: "edit/:id", element: <EditGame /> },
+      { path: "jouer/:id", element: <Jouer />}
     ],
   },
 ]);
