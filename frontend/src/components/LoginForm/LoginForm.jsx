@@ -28,7 +28,7 @@ export default function LoginForm() {
     if (emailVide || passwordVide) return;
     try{
       const data = await sendRequest(
-        `${import.meta.env.VITE_BACKEND_URL}/users/login`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/login`,
         "POST",
         JSON.stringify({ email, password})
       );
