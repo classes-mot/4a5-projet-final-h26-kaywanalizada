@@ -65,11 +65,11 @@ export default function Add(){
 
       <div className="control">
         <label htmlFor="type">Quiz type</label>
-        <textarea
+        <input
           id="type"
           name="type"
-          rows="4"
-          cols="35"
+          type="text"
+          required
         />
       </div>
 
