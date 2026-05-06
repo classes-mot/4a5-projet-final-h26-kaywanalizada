@@ -29,7 +29,7 @@ export default function Add(){
 
     try {
       await sendRequest(
-        "http://localhost:5000/api/quiz/addQuiz",
+        `${import.meta.env.VITE_BACKEND_URL}/quiz/addQuiz`,
         "POST",
         JSON.stringify({
           title: data.title,
@@ -38,7 +38,10 @@ export default function Add(){
           questions: questions.map((q) => q.question),
           reponse: questions.map((q) => q.reponse)
         }),
-        { Authorization: "Bearer " + sessionStorage.getItem("token")}
+        { 
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("token")
+        }
       )
       navigate("/quizList");
     } catch (error) {

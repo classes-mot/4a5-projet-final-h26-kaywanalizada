@@ -16,7 +16,7 @@ export default function UpdateTask() {
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
-        const data = await sendRequest(`http://localhost:5000/api/quiz/readUnQuiz/${id}`);
+        const data = await sendRequest(`${import.meta.env.VITE_BACKEND_URL}/quiz/readUnQuiz/${id}`);
         setQuizSelected(data);
         setQuestions(data.quiz.questions.map((q, index) => ({
           id:Math.random().toString(),
@@ -60,7 +60,7 @@ export default function UpdateTask() {
 
   try {
         await sendRequest(
-          `http://localhost:5000/api/quiz/modifierQuiz/${id}`,
+          `${import.meta.env.VITE_BACKEND_URL}/quiz/modifierQuiz/${id}`,
           "PATCH",
           JSON.stringify({
             title: data.title,

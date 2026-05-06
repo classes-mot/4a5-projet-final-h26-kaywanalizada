@@ -16,7 +16,7 @@ export default function Jouer() {
     useEffect(() => {
         const fetchQuiz = async () => {
         try {
-            const data = await sendRequest(`http://localhost:5000/api/quiz/readUnQuiz/${id}`);
+            const data = await sendRequest(`${import.meta.env.VITE_BACKEND_URL}/quiz/readUnQuiz/${id}`);
             setQuiz(data.quiz);
             setQuestions(data.quiz.questions.map((q, index) => ({
                 question: q,
