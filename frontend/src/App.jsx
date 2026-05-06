@@ -6,6 +6,7 @@ import ErrorPage from "./Pages/Error";
 import Add from "./Pages/Add";
 import RootLayout from "./Pages/RootLayout";
 import QuizList from "./components/QuizList/QuizList";
+import CreateCompte from "./components/CreateCompte/CreateCompte";
 
 import "./App.css";
 import Jouer from "./Pages/Jouer";
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
     children: [
       { path: "quizList", element: <QuizList /> },
       { path: "login", element: <Login /> },
+      { path: "signup", element: <CreateCompte /> },
       { path: "add", element: <Add /> },
       { path: "edit/:id", element: <EditGame /> },
       { path: "jouer/:id", element: <Jouer />}

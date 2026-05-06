@@ -22,7 +22,10 @@ export default function Header() {
             Se déconnecter
           </button>
         ) : (
+          <>
           <Link to="/login">Se connecter</Link>
+          <Link to="/signup">Créer un compte</Link>
+          </>
         )}
       </nav>
     </header>
