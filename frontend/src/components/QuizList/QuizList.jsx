@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext/AuthContext";
+import { useHttpClient } from "../hooks/http-hook";
 import QuizCard from "../QuizCard/QuizCard";
 import "./QuizList.css";
 
@@ -8,11 +9,23 @@ const QuizList = (props) => {
   const { isLoggedIn } = useAuth();
 
   const navigate = useNavigate();
-  const [quiz, setQuiz] = useState(
-    JSON.parse(localStorage.getItem("quiz")) || [],
-  );
+  const [quiz, setQuiz] = useState([]);
 
   const [quizRechercher, setQuizRechercher] = useState("");
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+  useEffect(() => {
+    const fetchQuiz = async () => {
+      try{
+        const data = await sendRequest("http://localhost:5000/api/quiz/readQuiz");
+        setQuiz(data);
+      }catch (error){
+        console.log(error);
+      }
+    };
+    fetchQuiz();
+
+  }, [sendRequest]);
 
   const quizFilter = quiz.filter((jeu) =>
     jeu.title?.toLowerCase().includes(quizRechercher.toLowerCase()),
@@ -29,10 +42,19 @@ const QuizList = (props) => {
       </div>
     );
   }
-  const supprimerJeu = (id) => {
-    const quizsupprimer = quiz.filter((jeu) => jeu.id !== id);
-    setQuiz(quizsupprimer);
-    localStorage.setItem("quiz", JSON.stringify(quizsupprimer));
+  const supprimerJeu = async (id) => {
+    try {
+      await sendRequest(
+        `http://localhost:5000/api/quiz/deleteQuiz/${id}`,
+        "DELETE",
+        null,
+        {Authorization: "Bearer " +sessionStorage.getItem("token")}
+      );
+      const quizsupprimer = quiz.filter((jeu) => jeu._id !== id);
+      setQuiz(quizsupprimer);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -53,11 +75,11 @@ const QuizList = (props) => {
 
         {quizFilter.map((game) => (
           <QuizCard
-            key={game.id}
-            id={game.id}
+            key={game._id}
+            id={game._id}
             title={game.title}
             type={game.type}
-            nbQuestions={game.nbQuestions}
+            nbQuestions={game.nbQuestion}
             isLoggedin={props.isLoggedIn}
             delete={supprimerJeu}
           />

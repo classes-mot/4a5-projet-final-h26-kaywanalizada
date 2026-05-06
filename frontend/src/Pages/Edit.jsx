@@ -1,16 +1,34 @@
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useHttpClient } from "../hooks/http-hook";
 
 export default function UpdateTask() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const storedQuiz = JSON.parse(localStorage.getItem("quiz")) || [];
-
-  const quizSelected = storedQuiz.find((g) => g.id === id);
+ const [quizSelected, setQuizSelected] = useState(null);
 
   const [questions, setQuestions] = useState(quizSelected?.questions || []);
+
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+  useEffect(() => {
+    const fetchQuiz = async () => {
+      try {
+        const data = await sendRequest(`http://localhost:5000/api/quiz/readUnQuiz/${id}`);
+        setQuizSelected(data);
+        setQuestions(data.quiz.questions.map((q, index) => ({
+          id:Math.random().toString(),
+          question: q,
+          reponse:data.quiz.reponse[index]
+        })));
+      }catch (error) {
+        console.log(error)
+      }
+    }
+    fetchQuiz();
+  }, [sendRequest, id])
 
       const ajouterQuestion = () => {
        setQuestions([...questions, { id:Math.random().toString(), question: "", reponse: ""}]);
@@ -34,27 +52,30 @@ export default function UpdateTask() {
     );
   }
 
-  function updateQuizSubmitHandler(event) {
+  const updateQuizSubmitHandler = async (event) => {
     event.preventDefault();
 
     const fd = new FormData(event.target);
     const data = Object.fromEntries(fd.entries());
 
-    const updatedQuiz = storedQuiz.map((g) =>
-      g.id === id
-        ? {
-            ...g,
+  try {
+        await sendRequest(
+          `http://localhost:5000/api/quiz/modifierQuiz/${id}`,
+          "PATCH",
+          JSON.stringify({
             title: data.title,
             type: data.type,
-            nbQuestions: questions.length,
-            questions: questions
-          }
-        : g,
-    );
+            nbQuestion: questions.length,
+            questions: questions.map((q) => q.question),
+            reponse: questions.map((q) => q.reponse)
+          }),
+          { Authorization: "Bearer " + sessionStorage.getItem("token")}
+        )
+        navigate("/quizList");
+      } catch (error) {
+        console.log(error);
+      }
 
-    localStorage.setItem("quiz", JSON.stringify(updatedQuiz));
-    navigate("/quizList");
-    console.log(updatedQuiz);
   }
 
   return (
@@ -67,7 +88,7 @@ export default function UpdateTask() {
           id="title"
           type="text"
           name="title"
-          defaultValue={quizSelected.title}
+          defaultValue={quizSelected.quiz.title}
           required
         />
       </div>
@@ -79,7 +100,7 @@ export default function UpdateTask() {
           name="type"
           rows="4"
           cols="35"
-          defaultValue={quizSelected.type}
+          defaultValue={quizSelected.quiz.type}
         />
       </div>
 

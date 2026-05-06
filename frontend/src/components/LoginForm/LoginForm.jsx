@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext/AuthContext";
+import { useHttpClient } from "../../hooks/http-hook";
 import "./LoginForm.css";
 
 export default function LoginForm() {
   const { login } = useAuth();
   const navigate = useNavigate();
+
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,7 +16,7 @@ export default function LoginForm() {
   const [emailVide, setEmailVide] = useState(false);
   const [passVide, setPassVide] = useState(false);
 
-  const authSubmitHandler = (event) => {
+  const authSubmitHandler = async (event) => {
     event.preventDefault();
 
     const emailVide = email.trim() === "";
@@ -23,10 +26,21 @@ export default function LoginForm() {
     setPassVide(passwordVide);
 
     if (emailVide || passwordVide) return;
+    try{
+      const data = await sendRequest(
+        "http://localhost:5000/api/users/login",
+        "POST",
+        JSON.stringify({ email, password})
+      );
 
-    login();
+      sessionStorage.setItem("token", data.token);
 
-    navigate("/quizList");
+      login();
+
+      navigate("/quizList");
+    }catch(error){
+      console.log(error);
+    }
   };
 
   return (

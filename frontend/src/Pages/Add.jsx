@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useHttpClient } from "../hooks/http-hook";
 import "./Add.css"
 export default function Add(){
     const navigate = useNavigate();
     const [questions, setQuestions] = useState([]);
+    const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
     const ajouterQuestion = () => {
        setQuestions([...questions, { id:Math.random().toString(), question: "", reponse: ""}]);
@@ -19,26 +21,30 @@ export default function Add(){
         setQuestions(questions.filter((q, i) => i !== index));
     }
 
-    function addQuizSubmitHandler(event) {
+    const addQuizSubmitHandler = async (event) => {
     event.preventDefault();
 
     const fd = new FormData(event.target);
     const data = Object.fromEntries(fd.entries());
 
-    const storedQuizs = JSON.parse(localStorage.getItem("quiz")) || [];
-    const addedQuiz = {
-        id: Math.random().toString(),
-        title: data.title,
-        type: data.type,
-        nbQuestions: questions.length,
-        questions: questions
-    };
+    try {
+      await sendRequest(
+        "http://localhost:5000/api/quiz/addQuiz",
+        "POST",
+        JSON.stringify({
+          title: data.title,
+          type: data.type,
+          nbQuestion: questions.length,
+          questions: questions.map((q) => q.question),
+          reponse: questions.map((q) => q.reponse)
+        }),
+        { Authorization: "Bearer " + sessionStorage.getItem("token")}
+      )
+      navigate("/quizList");
+    } catch (error) {
+      console.log(error);
+    }
 
-    const tableauQuiz = [...storedQuizs, addedQuiz]
-
-    localStorage.setItem("quiz", JSON.stringify(tableauQuiz));
-
-    navigate("/quizList");
   } 
       return (
     <form onSubmit={addQuizSubmitHandler}>
