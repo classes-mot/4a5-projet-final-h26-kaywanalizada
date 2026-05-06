@@ -2,6 +2,7 @@ import { useAuth } from "../AuthContext/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./Header.css";
+import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
 
 export default function Header() {
   const { isLoggedIn, logout } = useAuth();
@@ -27,6 +28,7 @@ export default function Header() {
           <Link to="/signup">Créer un compte</Link>
           </>
         )}
+        <LanguageSwitcher />
       </nav>
     </header>
   );
