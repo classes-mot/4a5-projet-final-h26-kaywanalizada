@@ -17,7 +17,7 @@ const QuizList = (props) => {
   useEffect(() => {
     const fetchQuiz = async () => {
       try{
-        const data = await sendRequest(`${import.meta.env.VITE_BACKEND_URL}/quiz/readQuiz`);
+        const data = await sendRequest(`${import.meta.env.VITE_BACKEND_URL}/api/quiz/readQuiz`);
         setQuiz(data);
       }catch (error){
         console.log(error);
@@ -45,7 +45,7 @@ const QuizList = (props) => {
   const supprimerJeu = async (id) => {
     try {
       await sendRequest(
-        `${import.meta.env.VITE_BACKEND_URL}/quiz/deleteQuiz/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/quiz/deleteQuiz/${id}`,
         "DELETE",
         null,
         {Authorization: "Bearer " +sessionStorage.getItem("token")}

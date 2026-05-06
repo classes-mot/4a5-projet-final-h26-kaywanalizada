@@ -29,7 +29,7 @@ export default function Add(){
 
     try {
       await sendRequest(
-        `${import.meta.env.VITE_BACKEND_URL}/quiz/addQuiz`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/quiz/addQuiz`,
         "POST",
         JSON.stringify({
           title: data.title,
