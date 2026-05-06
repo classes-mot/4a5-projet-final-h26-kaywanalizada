@@ -1,15 +1,34 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useHttpClient } from "../hooks/http-hook";
 import Modal from "../components/Modal/Modal";
 export default function Jouer() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
-    const quiz = JSON.parse(localStorage.getItem("quiz")).find((q) => q.id === id)
-    const questions = quiz ? quiz.questions : [];
+    const [quiz, setQuiz] = useState(null);
+    const [questions,setQuestions] = useState([]);
 
     const [reponses, setReponses] = useState([]);
     const [score, setScore] = useState(-1);
+
+    useEffect(() => {
+        const fetchQuiz = async () => {
+        try {
+            const data = await sendRequest(`http://localhost:5000/api/quiz/readUnQuiz/${id}`);
+            setQuiz(data.quiz);
+            setQuestions(data.quiz.questions.map((q, index) => ({
+                question: q,
+                reponse: data.quiz.reponse[index]
+            })));
+            
+        }catch (error){
+            console.log(error);
+        }
+    }
+    fetchQuiz();
+    }, [sendRequest, id]);
 
     const handleReponseChanger = (index, valeur) => {
         const nouvellesReponses = [...reponses];
@@ -28,6 +47,11 @@ export default function Jouer() {
             }
         })
         setScore(scoreTemp);
+    }
+    if(!quiz) {
+        return (
+            <div> Attendre </div>
+        )
     }
 
     return (
