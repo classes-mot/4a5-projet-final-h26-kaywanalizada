@@ -28,7 +28,7 @@ export default function CreateCompte() {
     if (emailVide || passwordVide) return;
     try{
       const data = await sendRequest(
-        `${import.meta.env.VITE_BACKEND_URL}/api/users/signup`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/addUser`,
         "POST",
         JSON.stringify({ email, password})
       );
