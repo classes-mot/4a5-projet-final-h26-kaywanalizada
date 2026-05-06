@@ -10,9 +10,11 @@ export default function CreateCompte() {
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [nomVide, setNomVide] = useState(false);
   const [emailVide, setEmailVide] = useState(false);
   const [passVide, setPassVide] = useState(false);
 
@@ -21,16 +23,18 @@ export default function CreateCompte() {
 
     const emailVide = email.trim() === "";
     const passwordVide = password.trim() === "";
+    const nomVide = name.trim() === "";
 
+    setNomVide(nomVide);
     setEmailVide(emailVide);
     setPassVide(passwordVide);
 
-    if (emailVide || passwordVide) return;
+    if (emailVide || passwordVide || nomVide) return;
     try{
       const data = await sendRequest(
         `${import.meta.env.VITE_BACKEND_URL}/api/users/addUser`,
         "POST",
-        JSON.stringify({ email, password})
+        JSON.stringify({ name, email, password})
       );
 
       sessionStorage.setItem("token", data.token);
@@ -48,6 +52,18 @@ export default function CreateCompte() {
       <h2>Créer un compte</h2>
 
       <div className="control-row">
+        <div className="control no-margin">
+          <label htmlFor="email">Nom</label>
+          <input
+            id="nom"
+            type="text"
+            value={name}
+            required
+            onChange={(e) => setName(e.target.value)}
+          />
+          {nomVide && <div className="error">Champ obligatoire</div>}
+        </div>
+
         <div className="control no-margin">
           <label htmlFor="email">Email</label>
           <input
