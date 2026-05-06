@@ -35,6 +35,11 @@ img {
   color: white;
 }
 
+.btn-jouer {
+  background-color: rgb(79, 145, 79);
+  color: white;
+}
+
 .btn-supprimer:hover {
   background-color: #dc2626;
 }
