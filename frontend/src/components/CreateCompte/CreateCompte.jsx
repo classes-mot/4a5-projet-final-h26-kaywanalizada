@@ -2,11 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext/AuthContext";
 import { useHttpClient } from "../../hooks/http-hook";
+import { useTranslation } from "react-i18next";
 import "./CreateCompte.css";
 
 export default function CreateCompte() {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -49,11 +51,11 @@ export default function CreateCompte() {
 
   return (
     <form onSubmit={authSubmitHandler}>
-      <h2>Créer un compte</h2>
+      <h2>{t("Créer un compte")}</h2>
 
       <div className="control-row">
         <div className="control no-margin">
-          <label htmlFor="email">Nom</label>
+          <label htmlFor="email">{t("Nom")}</label>
           <input
             id="nom"
             type="text"
@@ -65,7 +67,7 @@ export default function CreateCompte() {
         </div>
 
         <div className="control no-margin">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">{t("Email")}</label>
           <input
             id="email"
             type="email"
@@ -77,7 +79,7 @@ export default function CreateCompte() {
         </div>
 
         <div className="control no-margin">
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">{t("Password")}</label>
           <input
             id="password"
             type="password"
@@ -90,7 +92,7 @@ export default function CreateCompte() {
       </div>
 
       <p className="form-actions">
-        <button className="button">Créer un compte</button>
+        <button className="button">{t("Créer un compte")}</button>
       </p>
     </form>
   );

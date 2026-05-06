@@ -10,9 +10,21 @@
     "Supprimer": "Delete",
     "Ajouter Quiz": "Add Quiz",
     "Quiz title" : "Quiz title",
-    "AjouterQuestion": "Add Question",
+    "Ajouter Question": "Add Question",
     "Ajouter": "Add",
     "Créer un compte": "Create an account",
     "Nom": "Name",
-    "Se connecter": "Login"
+    "Se connecter": "Login",
+    "Confirmer": "Confirm",
+    "Annuler": "Cancel",
+    "Êtes-vous sûr de vouloir supprimer":"Are you sure you want to delete",
+    "No quiz found":"no quiz found",
+    "Supprimer question": "Delete question",
+    "Update Quiz": "Update Quiz",
+    "Bonne réponse": "Right answer",
+    "404 - Page non trouvée": "404 - page not found",
+    "Impossible de trouver cette page": "Impossible to find this page",
+    "Soumettre": "Submit",
+    "Quiz terminé!": "Quiz finished!",
+    "Votre score :": "Your score :"
 }

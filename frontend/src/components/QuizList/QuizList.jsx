@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext/AuthContext";
 import { useHttpClient } from "../../hooks/http-hook";
 import QuizCard from "../QuizCard/QuizCard";
+import { useTranslation } from "react-i18next";
 import "./QuizList.css";
 
 const QuizList = (props) => {
+  const { t } = useTranslation();
   const { isLoggedIn } = useAuth();
 
   const navigate = useNavigate();
@@ -33,10 +35,10 @@ const QuizList = (props) => {
   if (quiz.length === 0) {
     return (
       <div className="center">
-        <h2>No quiz found.</h2>
+        <h2>{t("No quiz found")}.</h2>
         {isLoggedIn && (
           <button className="btn btn-primary" onClick={() => navigate("/add")}>
-            Ajouter un quiz
+            {t("Ajouter un quiz")}
           </button>
         )}
       </div>
@@ -61,7 +63,7 @@ const QuizList = (props) => {
     <div className="container">
       {isLoggedIn && (
         <button className="btn btn-primary" onClick={() => navigate("/add")}>
-          Ajouter un quiz
+          {t("Ajouter un quiz")}
         </button>
       )}
         <input

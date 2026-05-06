@@ -1,7 +1,9 @@
 import { createPortal } from "react-dom";
 import "./Modal.css";
+import { useTranslation } from "react-i18next";
 
 function Modal({ isOpen, onClose, onConfirm, children }) {
+  const { t } = useTranslation();
   if (!isOpen) return null;
 
   return createPortal(
@@ -12,11 +14,11 @@ function Modal({ isOpen, onClose, onConfirm, children }) {
         <div className="modal-actions">
           {onConfirm && (
             <button className="confirm" onClick={onConfirm}>
-              Confirmer
+              {t("Confirmer")}
             </button>
           )}
           <button className="cancel" onClick={onClose}>
-            Annuler
+            {t("Annuler")}
           </button>
         </div>
       </div>

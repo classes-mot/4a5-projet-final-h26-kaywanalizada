@@ -3,7 +3,9 @@ import { useAuth } from "../AuthContext/AuthContext";
 import { useState } from "react";
 import "./QuizCard.css";
 import Modal from "../Modal/Modal";
+import { useTranslation } from "react-i18next";
 const QuizCard = (props) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,12 +17,12 @@ const QuizCard = (props) => {
   return (
     <li>
       <div className = "quiz-card">
-        <p>Titre:{props.title}</p>
-        <p>Type:{props.type}</p>
-        <p>Nombre de questions: {props.nbQuestions}</p>
+        <p>{t("Titre")}:{props.title}</p>
+        <p>{t("Type")}:{props.type}</p>
+        <p>{t("Nombre de questions")}: {props.nbQuestions}</p>
 
         <button className="btn-jouer" onClick={() =>navigate(`/jouer/${props.id}`)}>
-          Jouer
+          {t("Jouer")}
         </button>
 
         {isLoggedIn && (
@@ -29,13 +31,13 @@ const QuizCard = (props) => {
               className="btn-modifier"
               onClick={() => navigate(`/edit/${props.id}`)}
             >
-              Modifier
+              {t("Modifier")}
             </button>
             <button
               className="btn-supprimer"             
               onClick={() => setIsModalOpen(true)}
             >
-              Supprimer
+              {t("Supprimer")}
             </button>
           </div>
         )}
@@ -44,7 +46,7 @@ const QuizCard = (props) => {
         isOpen = {isModalOpen}
         onClose = {() => setIsModalOpen(false)}
         onConfirm = {handleDelete}
-        >Êtes-vous sûr de vouloir supprimer {props.title}?</Modal>
+        >{t("Êtes-vous sûr de vouloir supprimer")} {props.title}?</Modal>
     </li>
   );
 };

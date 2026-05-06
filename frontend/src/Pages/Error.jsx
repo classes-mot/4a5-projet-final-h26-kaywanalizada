@@ -1,8 +1,10 @@
+import { useTranslation } from "react-i18next";
 const ErrorPage = () => {
+  const { t } = useTranslation();
   return (
     <main>
-      <h1>404 - Page non trouvée</h1>
-      <p>Impossible de trouver cette page.</p>
+      <h1>{t("404 - Page non trouvée")}</h1>
+      <p>{t("Impossible de trouver cette page")}</p>
     </main>
   );
 };

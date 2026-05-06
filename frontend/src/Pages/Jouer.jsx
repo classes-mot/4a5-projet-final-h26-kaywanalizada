@@ -1,11 +1,13 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useHttpClient } from "../hooks/http-hook";
+import { useTranslation } from "react-i18next";
 import Modal from "../components/Modal/Modal";
 export default function Jouer() {
     const { id } = useParams();
     const navigate = useNavigate();
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
+    const { t } = useTranslation();
 
     const [quiz, setQuiz] = useState(null);
     const [questions,setQuestions] = useState([]);
@@ -68,13 +70,13 @@ export default function Jouer() {
              </div>
            ))}
 
-           <button onClick={handleSoumettre}>Soumettre</button>
+           <button onClick={handleSoumettre}>{t("Soumettre")}</button>
            <Modal
            isOpen={score !== -1}
            onClose={() => navigate("/quizList")}
            onConfirm={() => navigate("/quizList")}
-           ><h2>Quiz terminé!</h2>
-           <p>Votre score : {score} / {questions.length}</p>
+           ><h2>{t("Quiz terminé!")}</h2>
+           <p>{t("Votre score :")} {score} / {questions.length}</p>
             </Modal>
         </div>
     )

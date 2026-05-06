@@ -2,11 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext/AuthContext";
 import { useHttpClient } from "../../hooks/http-hook";
+import { useTranslation } from "react-i18next";
 import "./LoginForm.css";
 
 export default function LoginForm() {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -45,11 +47,11 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={authSubmitHandler}>
-      <h2>Login</h2>
+      <h2>{t("Se Connecter")}</h2>
 
       <div className="control-row">
         <div className="control no-margin">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">{t("Email")}</label>
           <input
             id="email"
             type="email"
@@ -61,7 +63,7 @@ export default function LoginForm() {
         </div>
 
         <div className="control no-margin">
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">{t("Password")}</label>
           <input
             id="password"
             type="password"
@@ -74,7 +76,7 @@ export default function LoginForm() {
       </div>
 
       <p className="form-actions">
-        <button className="button">Se connecter</button>
+        <button className="button">{t("Se connecter")}</button>
       </p>
     </form>
   );

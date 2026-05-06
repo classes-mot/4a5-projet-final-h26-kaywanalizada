@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useHttpClient } from "../hooks/http-hook";
+import { useTranslation } from "react-i18next";
 import "./Add.css"
 export default function Add(){
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const [questions, setQuestions] = useState([]);
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -51,10 +53,10 @@ export default function Add(){
   } 
       return (
     <form onSubmit={addQuizSubmitHandler}>
-      <h2>Ajouter Quiz</h2>
+      <h2>{t("Ajouter Quiz")}</h2>
 
       <div className="control">
-        <label htmlFor="title">Quiz title</label>
+        <label htmlFor="title">{t("Quiz title")}</label>
         <input
           id="title"
           type="text"
@@ -64,7 +66,7 @@ export default function Add(){
       </div>
 
       <div className="control">
-        <label htmlFor="type">Quiz type</label>
+        <label htmlFor="type">{t("Quiz type")}</label>
         <input
           id="type"
           name="type"
@@ -74,7 +76,7 @@ export default function Add(){
       </div>
 
         <div className="control">
-        <label htmlFor="nbQuestions">Nombre de questions</label>
+        <label htmlFor="nbQuestions">{t("Nombre de questions")}</label>
         <input
           id="nbQuestions"
           type="number"
@@ -108,12 +110,12 @@ export default function Add(){
               </div>
 
             <button type="button" onClick={() => supprimerQuestion(index)}>
-            Supprimer question
+            {t("Supprimer question")}
           </button>
           </div>
         ))}
         <button type="button" onClick={ajouterQuestion}>
-          AjouterQuestion
+          {t("Ajouter Question")}
         </button>
 
       </div>
@@ -124,7 +126,7 @@ export default function Add(){
           Reset
         </button>
         <button type="submit" className="button">
-          Ajouter
+          {t("Ajouter")}
         </button>
       </p>
     </form>

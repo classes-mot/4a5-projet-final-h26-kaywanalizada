@@ -2,10 +2,12 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useHttpClient } from "../hooks/http-hook";
+import { useTranslation } from "react-i18next";
 
 export default function UpdateTask() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
  const [quizSelected, setQuizSelected] = useState(null);
 
@@ -80,10 +82,10 @@ export default function UpdateTask() {
 
   return (
     <form onSubmit={updateQuizSubmitHandler}>
-      <h2>Update Quiz</h2>
+      <h2>{t("Update Quiz")}</h2>
 
       <div className="control">
-        <label htmlFor="title">Quiz title</label>
+        <label htmlFor="title">{t("Quiz title")}</label>
         <input
           id="title"
           type="text"
@@ -94,7 +96,7 @@ export default function UpdateTask() {
       </div>
 
       <div className="control">
-        <label htmlFor="type">Game type</label>
+        <label htmlFor="type">{t("Game type")}</label>
         <textarea
           id="type"
           name="type"
@@ -105,7 +107,7 @@ export default function UpdateTask() {
       </div>
 
         <div className="control">
-        <label htmlFor="nbQuestions">Nombre de questions</label>
+        <label htmlFor="nbQuestions">{t("Nombre de questions")}</label>
         <input
           id="nbQuestions"
           type="number"
@@ -127,7 +129,7 @@ export default function UpdateTask() {
               </div>
 
             <div className="control">
-            <label>Bonne réponse</label>
+            <label>{t("Bonne réponse")}</label>
             <input
               type="text"
               value={q.reponse}
@@ -137,12 +139,12 @@ export default function UpdateTask() {
               </div>
 
             <button type="button" onClick={() => supprimerQuestion(index)}>
-            Supprimer question
+            {t("Supprimer question")}
           </button>
           </div>
         ))}
         <button type="button" onClick={ajouterQuestion}>
-          Ajouter Question
+          {t("Ajouter Question")}
         </button>
 
       </div>
