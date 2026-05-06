@@ -47,7 +47,7 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={authSubmitHandler}>
-      <h2>{t("Se Connecter")}</h2>
+      <h2>{t("Se connecter")}</h2>
 
       <div className="control-row">
         <div className="control no-margin">
