@@ -1,2 +1,3 @@
 # Projet
 Description du projet, comment l'exécuter, etc...
+faire npm pour le backend et le frontend
